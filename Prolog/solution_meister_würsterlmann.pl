@@ -46,11 +46,18 @@ puzzle([A,B,C,D,E,F,G]):- poison([A,B,C,D,E,F,G]),different([A,B,C,D,E,F,G]), \+
     						count(onwards,[A,B,C,D,E,F,G],1), count(back,[A,B,C,D,E,F,G],1), 
     						count(wine,[A,B,C,D,E,F,G],2).
 
+puzzle_without_picture([A,B,C,D,E,F,G]):- poison([A,B,C,D,E,F,G]),different([A,B,C,D,E,F,G]), \+notfriend([A,B,C,D,E,F,G]), 
+    						twins([A,B,C,D,E,F,G]),
+    						count(onwards,[A,B,C,D,E,F,G],1), 
+    						count(poison,[A,B,C,D,E,F,G],3), 
+    						count(back,[A,B,C,D,E,F,G],1), 
+    						count(wine,[A,B,C,D,E,F,G],2).
 
-%Helper rule to ensure amount of liquids is right.
 count(_, [], 0).
 count(X, [X | T], N) :- !,
-  count(X, T, N1),
-  N is N1 + 1.
+    liquid(X),
+  	count(X, T, N1),
+ 	N is N1 + 1.
 count(X, [_ | T], N) :-
-  count(X, T, N).
+    liquid(X),
+  	count(X, T, N).
